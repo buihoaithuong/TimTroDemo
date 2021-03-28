@@ -2,28 +2,58 @@ package com.ictu.vusenpai.timtro.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 
 public class BaiDang implements Parcelable {
-    private String id;
+    private String idUser;
     private String tieuDe;
-    private String thoiGianDang;
-    private Phong phong;
+    private String diaChi;
+    private int dienTich;
+    private ArrayList<String> anhFeeback;
+    private int gia;
+    private String idBaiDang;
 
-    public BaiDang(String id, String tieuDe, String thoiGianDang, Phong phong) {
-        this.id = id;
+    public BaiDang(String idUser, String idBaiDang, String tieuDe, String diaChi, int dienTich, ArrayList<String> anhFeeback, int gia) {
+        this.idUser = idUser;
         this.tieuDe = tieuDe;
-        this.thoiGianDang = thoiGianDang;
-        this.phong = phong;
+        this.diaChi = diaChi;
+        this.dienTich = dienTich;
+        this.anhFeeback = anhFeeback;
+        this.gia = gia;
+        this.idBaiDang = idBaiDang;
+    }
+
+    public BaiDang() {
     }
 
     protected BaiDang(Parcel in) {
-        id = in.readString();
+        idUser = in.readString();
         tieuDe = in.readString();
-        thoiGianDang = in.readString();
-        phong=in.readParcelable(User.class.getClassLoader());
+        diaChi = in.readString();
+        dienTich = in.readInt();
+        anhFeeback = in.createStringArrayList();
+        gia = in.readInt();
+        idBaiDang = in.readString();
     }
 
-    public static final Parcelable.Creator<BaiDang> CREATOR = new Parcelable.Creator<BaiDang>() {
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(idUser);
+        dest.writeString(tieuDe);
+        dest.writeString(diaChi);
+        dest.writeInt(dienTich);
+        dest.writeStringList(anhFeeback);
+        dest.writeInt(gia);
+        dest.writeString(idBaiDang);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<BaiDang> CREATOR = new Creator<BaiDang>() {
         @Override
         public BaiDang createFromParcel(Parcel in) {
             return new BaiDang(in);
@@ -35,12 +65,12 @@ public class BaiDang implements Parcelable {
         }
     };
 
-    public String getId() {
-        return id;
+    public String getIdUser() {
+        return idUser;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 
     public String getTieuDe() {
@@ -51,32 +81,43 @@ public class BaiDang implements Parcelable {
         this.tieuDe = tieuDe;
     }
 
-    public String getThoiGianDang() {
-        return thoiGianDang;
+    public String getDiaChi() {
+        return diaChi;
     }
 
-    public void setThoiGianDang(String thoiGianDang) {
-        this.thoiGianDang = thoiGianDang;
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
     }
 
-    public Phong getPhong() {
-        return phong;
+    public int getDienTich() {
+        return dienTich;
     }
 
-    public void setPhong(Phong phong) {
-        this.phong = phong;
+    public void setDienTich(int dienTich) {
+        this.dienTich = dienTich;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public ArrayList<String> getAnhFeeback() {
+        return anhFeeback;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(tieuDe);
-        dest.writeString(thoiGianDang);
-        dest.writeParcelable(phong, flags);
+    public void setAnhFeeback(ArrayList<String> anhFeeback) {
+        this.anhFeeback = anhFeeback;
+    }
+
+    public int getGia() {
+        return gia;
+    }
+
+    public void setGia(int gia) {
+        this.gia = gia;
+    }
+
+    public String getIdBaiDang() {
+        return idBaiDang;
+    }
+
+    public void setIdBaiDang(String idBaiDang) {
+        this.idBaiDang = idBaiDang;
     }
 }

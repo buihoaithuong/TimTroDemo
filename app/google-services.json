@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "175253967142",
+    "firebase_url": "https://appandoid-e0def-default-rtdb.firebaseio.com",
+    "project_id": "appandoid-e0def",
+    "storage_bucket": "appandoid-e0def.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:175253967142:android:d904a3141ac7c06664b1e7",
+        "android_client_info": {
+          "package_name": "com.ictu.vusenpai.timtro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "175253967142-c36lgnbvfnqteiq53v4v6gu4iim7p65v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0DWMneHSSAv3SMSz-pWBxtXpw40-0K68"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "175253967142-c36lgnbvfnqteiq53v4v6gu4iim7p65v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

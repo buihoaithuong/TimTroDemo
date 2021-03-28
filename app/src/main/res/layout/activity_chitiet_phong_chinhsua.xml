@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.activity_chitiet_baiDang_chinhsua">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/edTieuDeChiTietBaiDangChinhSua"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="Tiêu đề bài đăng"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="211dp"
+                android:layout_marginTop="20dp">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/imageSliderChiTietChinhSua"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btnAddImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="#57ECDF"
+                    android:src="@drawable/icon_addimg"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="mini" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageLoceChiTiet"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icons_loca" />
+
+                <EditText
+                    android:id="@+id/edDiaChiChiTiet"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:hint="Địa chỉ phòng trọ"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageDienTichChiTiet"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icon_dientich" />
+
+                <EditText
+                    android:id="@+id/edDienTichChiTiet"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:hint="Diện tích"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageDienThoai"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icon_phone" />
+
+                <EditText
+                    android:id="@+id/edSoDienThoaiChiTiet"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:hint="Số điện thoại"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icon_gia"
+                    android:id="@+id/imageGiaPhong"/>
+
+                <EditText
+                    android:id="@+id/edGiaPhongChiTiet"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:hint="Giá"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:src="@drawable/edit"
+        android:layout_margin="10dp"
+        android:id="@+id/btnCreateNew"
+        app:fabSize="normal"
+        android:backgroundTint="#4CA127"
+        app:backgroundTint="@color/white"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:src="@drawable/remove"
+        android:layout_margin="10dp"
+        android:id="@+id/btnXoaNew"
+        app:fabSize="normal"
+        android:backgroundTint="#E65411"
+        app:backgroundTint="@color/white"/>
+
+</FrameLayout>
