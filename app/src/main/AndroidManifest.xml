@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme">
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="@string/mapAPIKey"/>
-        <activity android:name=".activity.activity_chitiet_baiDang_chinhsua" />
+        <activity android:name=".activity.activity_chitiet_baiDang_Creat" />
         <activity android:name=".activity.login_activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

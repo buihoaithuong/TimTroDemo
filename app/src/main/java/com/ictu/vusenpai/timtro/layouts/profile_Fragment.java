@@ -1,4 +1,4 @@
-package com.ictu.vusenpai.timtro.activity;
+package com.ictu.vusenpai.timtro.layouts;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,9 +18,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ictu.vusenpai.timtro.R;
 import com.ictu.vusenpai.timtro.model.User;
+import com.ictu.vusenpai.timtro.xuly.Update;
 
-public class profile_activity extends Fragment {
+public class profile_Fragment extends Fragment {
     TextView tv_fullname,tv_add,tv_email,tv_diachiCT,tv_SDT;
+    User user;
     private static FirebaseAuth mAuth;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,21 +42,10 @@ public class profile_activity extends Fragment {
         mAuth = FirebaseAuth.getInstance();
     }
     private void loadProfile(){
-        FirebaseDatabase.getInstance().getReference()
-                .child("Users").child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                tv_add.setText(user.getDiaChi());
-                tv_diachiCT.setText(user.getDiaChi());
-                tv_email.setText(user.getEmail());
-                tv_fullname.setText(user.getHo_ten());
-                tv_SDT.setText(user.getSDT());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+        tv_add.setText(Update.getLsUsser().getDiaChi());
+        tv_diachiCT.setText(Update.getLsUsser().getDiaChi());
+        tv_email.setText(Update.getLsUsser().getEmail());
+        tv_fullname.setText(Update.getLsUsser().getHo_ten());
+        tv_SDT.setText(Update.getLsUsser().getSDT());
     }
 }

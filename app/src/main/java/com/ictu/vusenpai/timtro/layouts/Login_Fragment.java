@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.ictu.vusenpai.timtro.R;
 import com.ictu.vusenpai.timtro.activity.MainActivity;
+import com.ictu.vusenpai.timtro.xuly.Update;
 import com.ictu.vusenpai.timtro.xuly.Utils;
 
 import android.text.InputType;
@@ -142,10 +143,12 @@ public class Login_Fragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            Update.setlsUser(mAuth.getInstance().getCurrentUser().getUid());
                             progressDialog.dismiss();
                             startActivity(new Intent(getActivity(), MainActivity.class));
                         } else {
                             Toast.makeText(getContext(), "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
                         }
                     }
                 });

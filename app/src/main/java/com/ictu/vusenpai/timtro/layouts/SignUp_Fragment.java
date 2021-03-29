@@ -12,6 +12,7 @@ import com.ictu.vusenpai.timtro.R;
 import com.ictu.vusenpai.timtro.activity.MainActivity;
 import com.ictu.vusenpai.timtro.model.BaiDang;
 import com.ictu.vusenpai.timtro.model.User;
+import com.ictu.vusenpai.timtro.xuly.Update;
 import com.ictu.vusenpai.timtro.xuly.Utils;
 
 import androidx.annotation.NonNull;
@@ -112,19 +113,21 @@ public class SignUp_Fragment extends Fragment implements OnClickListener{
             dangKy(getFullName,getLocation,getMobileNumber,getEmailId,getPassword);
 
     }
-    private void dangKy(final String FullName, final String Location, final String MobileNumber, final String email, String passwords){
-        mAuth.createUserWithEmailAndPassword(email, passwords)
+    private void dangKy(final String FullName, final String Location, final String MobileNumber, final String Email, String passwords){
+        mAuth.createUserWithEmailAndPassword(Email, passwords)
                 .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+                            final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             progressDialog = ProgressDialog.show(getContext(), "", "Đang ghi danh...");
-                            User user = new User(FullName,email,Location,MobileNumber,new ArrayList<BaiDang>(),FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            User user = new User(FirebaseAuth.getInstance().getCurrentUser().getUid(),FullName,Email,Location,MobileNumber);
                             FirebaseDatabase.getInstance().getReference("Users")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .child(uid)
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
+                                    Update.setlsUser(uid);
                                     progressDialog.dismiss();
                                     Toast.makeText(getActivity(), "Đăng ký thành công", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getActivity(), MainActivity.class);

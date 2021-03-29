@@ -1,26 +1,34 @@
-package com.ictu.vusenpai.timtro.activity;
+package com.ictu.vusenpai.timtro.layouts;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.ictu.vusenpai.timtro.R;
-import com.ictu.vusenpai.timtro.adapter.PhongAdapter;
+import com.ictu.vusenpai.timtro.activity.chitietbaiDang_activity;
+import com.ictu.vusenpai.timtro.adapter.RecyclerView_listBaiDangTongAdapter;
 import com.ictu.vusenpai.timtro.model.BaiDang;
-import com.ictu.vusenpai.timtro.model.Update;
+import com.ictu.vusenpai.timtro.xuly.MyOnItemClickListener;
+import com.ictu.vusenpai.timtro.xuly.Update;
 
 import java.util.ArrayList;
 
-public class search_activity extends Fragment {
+public class search_Fragment extends Fragment {
     ArrayList<BaiDang> lstBaiDangSearch;
     RecyclerView lvPhongSreach;
     SearchView sreachView;
-    PhongAdapter adapter;
+    RecyclerView_listBaiDangTongAdapter adapter;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -33,13 +41,33 @@ public class search_activity extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        lstBaiDangSearch.clear();
-        lstBaiDangSearch= Update.getLsBaiDang();
-        adapter = new PhongAdapter(getContext(),lstBaiDangSearch);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         lvPhongSreach.setHasFixedSize(true);
-        lvPhongSreach.setAdapter(adapter);
         lvPhongSreach.setLayoutManager(linearLayoutManager);
+        FirebaseDatabase.getInstance().getReference("baiDang")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Update.setLsBaiDang();
+                        lstBaiDangSearch.clear();
+                        for (DataSnapshot child : snapshot.getChildren()) {
+                            lstBaiDangSearch.add(child.getValue(BaiDang.class));
+                        }
+                        adapter=new RecyclerView_listBaiDangTongAdapter(getContext(),lstBaiDangSearch);
+                        adapter.setMyOnItemClickListener(new MyOnItemClickListener() {
+                            @Override
+                            public void onClick(BaiDang baiDang) {
+                                Intent intent = new Intent(getActivity(), chitietbaiDang_activity.class);
+                                intent.putExtra("Phong",baiDang);
+                                startActivity(intent);
+                            }
+                        });
+                        lvPhongSreach.setAdapter(adapter);
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
         if(sreachView != null){
             sreachView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
@@ -63,7 +91,15 @@ public class search_activity extends Fragment {
                             myList.add(item);
                         }
                     }
-                    adapter = new PhongAdapter(getContext(),myList);
+                    adapter = new RecyclerView_listBaiDangTongAdapter(getContext(),myList);
+                    adapter.setMyOnItemClickListener(new MyOnItemClickListener() {
+                        @Override
+                        public void onClick(BaiDang baiDang) {
+                            Intent intent = new Intent(getActivity(), chitietbaiDang_activity.class);
+                            intent.putExtra("Phong",baiDang);
+                            startActivity(intent);
+                        }
+                    });
                     lvPhongSreach.setAdapter(adapter);
                 }
             });

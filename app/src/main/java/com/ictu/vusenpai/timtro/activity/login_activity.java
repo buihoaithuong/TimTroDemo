@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 
 import com.ictu.vusenpai.timtro.R;
 import com.ictu.vusenpai.timtro.layouts.Login_Fragment;
-import com.ictu.vusenpai.timtro.model.Update;
+import com.ictu.vusenpai.timtro.xuly.Update;
 import com.ictu.vusenpai.timtro.xuly.Utils;
 
 public class login_activity extends AppCompatActivity {
@@ -17,7 +17,6 @@ public class login_activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Update.setLsBaiDang();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.frameContainer, new Login_Fragment(), Utils.Login_Fragment).commit();
         }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.activity_chitiet_baiDang_chinhsua">
+    tools:context=".activity.activity_chitiet_baiDang_Creat">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -125,7 +125,6 @@
                     android:layout_marginLeft="2dp"
                     android:hint="Giá"/>
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
     <com.google.android.material.floatingactionbutton.FloatingActionButton

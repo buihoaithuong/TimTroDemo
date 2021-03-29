@@ -4,6 +4,7 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
@@ -44,7 +45,14 @@ public class chitietbaiDang_activity extends AppCompatActivity implements OnMapR
         txtSDT.setText("07462522734");
         if(getLocationFromAddress(this,txtDiaChi.getText().toString())!=null)
             mapFragment.getMapAsync(this);
+
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     private void anhxa(){
         txtTieuDe=findViewById(R.id.txtTieuDeChiTietBaiDang);
         txtDiaChi = findViewById(R.id.txtDiaChiChiTiet);

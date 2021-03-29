@@ -7,54 +7,37 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.ictu.vusenpai.timtro.R;
 import com.ictu.vusenpai.timtro.adapter.ImageSliderAdapterLoca;
 import com.ictu.vusenpai.timtro.model.BaiDang;
-import com.ictu.vusenpai.timtro.model.Update;
 import com.ictu.vusenpai.timtro.model.User;
+import com.ictu.vusenpai.timtro.xuly.Update;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
-import javax.xml.transform.Result;
-
-public class activity_chitiet_baiDang_chinhsua extends AppCompatActivity {
+public class activity_chitiet_baiDang_Creat extends AppCompatActivity {
     private EditText edtieuDe, edDiaChi, edDienTich,edSDT,edGia;
     private FloatingActionButton btnCreate,btnRemove, btnAddImg;
     private ViewPager imageSlider;
@@ -77,7 +60,7 @@ public class activity_chitiet_baiDang_chinhsua extends AppCompatActivity {
         btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(activity_chitiet_baiDang_chinhsua.this,MainActivity.class));
+                startActivity(new Intent(activity_chitiet_baiDang_Creat.this,MainActivity.class));
             }
         });
         //Thêm ảnh
@@ -88,6 +71,12 @@ public class activity_chitiet_baiDang_chinhsua extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     private void pickImage(){
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -138,9 +127,11 @@ public class activity_chitiet_baiDang_chinhsua extends AppCompatActivity {
         public dangBai(ArrayList<Uri> lsUri) {
             this.lsUri = lsUri;
         }
+        private SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
         @Override
         protected Void doInBackground(Void... uris) {
             final ArrayList<String> lsUrl = new ArrayList<>();
+            final String idUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
             StorageReference imageFolder = FirebaseStorage.getInstance().getReference().child("ImageForder");
             for(Uri item : lsUri){
                 final StorageReference imageName = imageFolder.child("Image"+item.getLastPathSegment());
@@ -153,12 +144,13 @@ public class activity_chitiet_baiDang_chinhsua extends AppCompatActivity {
                                 lsUrl.add(String.valueOf(uri));
                                 if(lsUrl.size()==lsUri.size()){
                                     final String keyBaiDang = FirebaseDatabase.getInstance().getReference("baiDang").push().getKey();
-                                    BaiDang baidang = new BaiDang(FirebaseAuth.getInstance().getCurrentUser().getUid(),keyBaiDang,edtieuDe.getText().toString(),edDiaChi.getText().toString(),
-                                            Integer.parseInt(edDienTich.getText().toString()),lsUrl,Integer.parseInt(edGia.getText().toString()));
+                                    String time = df.format(Calendar.getInstance().getTime());
+                                    BaiDang baidang = new BaiDang(edtieuDe.getText().toString(),edDiaChi.getText().toString(),Integer.parseInt(edDienTich.getText().toString()),lsUrl,Integer.parseInt(edGia.getText().toString()),keyBaiDang,idUser,time);
                                     FirebaseDatabase.getInstance().getReference("baiDang").child(keyBaiDang).setValue(baidang).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
-                                            startActivity(new Intent(activity_chitiet_baiDang_chinhsua.this,MainActivity.class));
+                                            startActivity(new Intent(activity_chitiet_baiDang_Creat.this,MainActivity.class));
+                                            Toast.makeText(getApplicationContext(), "Đăng bài thành công", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }
@@ -173,12 +165,12 @@ public class activity_chitiet_baiDang_chinhsua extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog = ProgressDialog.show(activity_chitiet_baiDang_Creat.this,"","Đang đăng bài....");
         }
 
         @Override
         protected void onPostExecute(Void strings) {
             super.onPostExecute(strings);
-            Toast.makeText(getApplicationContext(), "Đăng bài thành công", Toast.LENGTH_SHORT).show();
         }
     }
 }

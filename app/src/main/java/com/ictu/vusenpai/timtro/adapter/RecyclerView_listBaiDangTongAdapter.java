@@ -1,9 +1,11 @@
 package com.ictu.vusenpai.timtro.adapter;
 import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,7 +19,7 @@ import com.ictu.vusenpai.timtro.xuly.MyOnItemClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhongAdapter extends RecyclerView.Adapter<PhongAdapter.PhongHolder> {
+public class RecyclerView_listBaiDangTongAdapter extends RecyclerView.Adapter<RecyclerView_listBaiDangTongAdapter.PhongHolder> {
     private Context context;
     private List<BaiDang> baiDangList=new ArrayList<>();
     private MyOnItemClickListener myOnItemClickListener;
@@ -25,7 +27,7 @@ public class PhongAdapter extends RecyclerView.Adapter<PhongAdapter.PhongHolder>
     public void setMyOnItemClickListener(MyOnItemClickListener myOnItemClickListener) {
         this.myOnItemClickListener = myOnItemClickListener;
     }
-    public PhongAdapter(Context mContext, List<BaiDang> baiDangList) {
+    public RecyclerView_listBaiDangTongAdapter(Context mContext, List<BaiDang> baiDangList) {
         this.baiDangList.clear();
         this.context = mContext;
         this.baiDangList = baiDangList;
@@ -48,6 +50,7 @@ public class PhongAdapter extends RecyclerView.Adapter<PhongAdapter.PhongHolder>
         holder.txtGia.setText(setGia(baiDang.getGia()));
         holder.txtDiaChi.setText(baiDang.getDiaChi());
         holder.txtDienTich.setText("Diện tích:"+String.valueOf(baiDang.getDienTich())+"m2");
+        holder.txtThoiGianDang.setText(baiDang.getTimeDang());
         Glide.with(context).load(baiDang.getAnhFeeback().get(0)).error(R.drawable.no_internet).into(holder.imageView);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

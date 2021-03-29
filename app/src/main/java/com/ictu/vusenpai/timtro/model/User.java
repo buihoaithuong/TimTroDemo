@@ -1,35 +1,27 @@
 package com.ictu.vusenpai.timtro.model;
 
-import java.util.List;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class User {
+import java.util.ArrayList;
+
+public class User  {
     private  String id;
     private String ho_ten;
     private String email;
     private String diaChi;
     private String SDT;
-    private List<BaiDang> baiDangList;
 
     public User() {
     }
 
-    public User(String ho_ten, String email, String diaChi, String SDT, List<BaiDang> baiDangList, String id) {
+    public User(String id, String ho_ten, String email, String diaChi, String SDT) {
+        this.id = id;
         this.ho_ten = ho_ten;
         this.email = email;
         this.diaChi = diaChi;
         this.SDT = SDT;
-        this.baiDangList = baiDangList;
-        this.id=id;
     }
-
-    public User(String ho_ten, String email, String diaChi, String SDT, String id) {
-        this.ho_ten = ho_ten;
-        this.email = email;
-        this.diaChi = diaChi;
-        this.SDT = SDT;
-        this.id=id;
-    }
-
     public String getId() {
         return id;
     }
@@ -38,28 +30,20 @@ public class User {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public List<BaiDang> getBaiDangList() {
-        return baiDangList;
-    }
-
-    public void setBaiDangList(List<BaiDang> baiDangList) {
-        this.baiDangList = baiDangList;
-    }
-
     public String getHo_ten() {
         return ho_ten;
     }
 
     public void setHo_ten(String ho_ten) {
         this.ho_ten = ho_ten;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getDiaChi() {
