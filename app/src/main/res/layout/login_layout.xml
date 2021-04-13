@@ -10,14 +10,18 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical" >
-
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/clipart4526050"
+            android:layout_gravity="center"/>
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/login"
-            android:textColor="@color/white_greyish"
+            android:textColor="#FF9800"
             android:textSize="25sp"
             android:textStyle="bold" />
 
@@ -28,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/email"
+            android:drawableLeft="@drawable/ic_editemail"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:hint="@string/email"
@@ -49,7 +53,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/password"
+            android:drawableLeft="@drawable/ic_editpassword"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:hint="@string/passowrd"
@@ -82,9 +86,10 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
+            android:background="@drawable/custom_btnbofullgoc"
             android:padding="3dp"
-            android:text="@string/login"
-            android:textColor="#009688"
+            android:text="ĐĂNG NHẬP"
+            android:textColor="#FF9800"
             android:textSize="17sp"
             android:textStyle="bold" />
     </LinearLayout>

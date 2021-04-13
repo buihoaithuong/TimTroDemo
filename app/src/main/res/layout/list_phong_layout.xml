@@ -14,10 +14,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:src="@drawable/create"
+        android:src="@drawable/ic_taobaidang"
         android:layout_margin="10dp"
         android:id="@+id/btnCreateBaidang"
         app:fabSize="normal"
-        android:backgroundTint="#FFEB3B"
         app:backgroundTint="@color/white_greyish"/>
 </FrameLayout>

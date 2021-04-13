@@ -15,11 +15,12 @@ public class BaiDang implements Parcelable {
     private String idBaiDang;
     private String idUser;
     private String timeDang;
+    private String soDienThoai;
 
     public BaiDang() {
     }
 
-    public BaiDang(String tieuDe, String diaChi, int dienTich, ArrayList<String> anhFeeback, int gia, String idBaiDang, String idUser, String time) {
+    public BaiDang(String tieuDe, String diaChi, int dienTich, ArrayList<String> anhFeeback, int gia, String idBaiDang, String idUser, String time, String sdt) {
         this.tieuDe = tieuDe;
         this.diaChi = diaChi;
         this.dienTich = dienTich;
@@ -28,8 +29,8 @@ public class BaiDang implements Parcelable {
         this.idBaiDang = idBaiDang;
         this.idUser = idUser;
         this.timeDang = time;
+        this.soDienThoai =sdt;
     }
-
     protected BaiDang(Parcel in) {
         tieuDe = in.readString();
         diaChi = in.readString();
@@ -38,6 +39,8 @@ public class BaiDang implements Parcelable {
         gia = in.readInt();
         idBaiDang = in.readString();
         idUser = in.readString();
+        timeDang = in.readString();
+        soDienThoai = in.readString();
     }
 
     public static final Creator<BaiDang> CREATOR = new Creator<BaiDang>() {
@@ -52,12 +55,22 @@ public class BaiDang implements Parcelable {
         }
     };
 
-    public String getTimeDang() {
-        return timeDang;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setTimeDang(String timeDang) {
-        this.timeDang = timeDang;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(tieuDe);
+        dest.writeString(diaChi);
+        dest.writeInt(dienTich);
+        dest.writeStringList(anhFeeback);
+        dest.writeInt(gia);
+        dest.writeString(idBaiDang);
+        dest.writeString(idUser);
+        dest.writeString(timeDang);
+        dest.writeString(soDienThoai);
     }
 
     public String getTieuDe() {
@@ -116,20 +129,19 @@ public class BaiDang implements Parcelable {
         this.idUser = idUser;
     }
 
-
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getTimeDang() {
+        return timeDang;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(tieuDe);
-        dest.writeString(diaChi);
-        dest.writeInt(dienTich);
-        dest.writeStringList(anhFeeback);
-        dest.writeInt(gia);
-        dest.writeString(idBaiDang);
-        dest.writeString(idUser);
+    public void setTimeDang(String timeDang) {
+        this.timeDang = timeDang;
+    }
+
+    public String getSoDienThoai() {
+        return soDienThoai;
+    }
+
+    public void setSoDienThoai(String soDienThoai) {
+        this.soDienThoai = soDienThoai;
     }
 }

@@ -42,8 +42,8 @@ public class activity_chitiet_baiDang_Creat extends AppCompatActivity {
     private FloatingActionButton btnCreate,btnRemove, btnAddImg;
     private ViewPager imageSlider;
     private  ArrayList<Uri> listUri;
-    private ProgressDialog progressDialog;
     private static final int PICK_IMAGES_CODE=0;
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,13 +97,13 @@ public class activity_chitiet_baiDang_Creat extends AppCompatActivity {
                             listUri.add(data.getClipData().getItemAt(i).getUri());
                         }
                         //xử lý cho ảnh ra
-                        ImageSliderAdapterLoca imageSliderAdapter = new ImageSliderAdapterLoca(listUri);
+                        ImageSliderAdapterLoca imageSliderAdapter = new ImageSliderAdapterLoca(getApplicationContext(),listUri);
                         imageSlider.setAdapter(imageSliderAdapter);
                     }
                     else {
                         listUri.add(data.getData());
                         //xử lý ảnh ra
-                        ImageSliderAdapterLoca imageSliderAdapter = new ImageSliderAdapterLoca(listUri);
+                        ImageSliderAdapterLoca imageSliderAdapter = new ImageSliderAdapterLoca(getApplicationContext(),listUri);
                         imageSlider.setAdapter(imageSliderAdapter);
                     }
                 }
@@ -145,7 +145,7 @@ public class activity_chitiet_baiDang_Creat extends AppCompatActivity {
                                 if(lsUrl.size()==lsUri.size()){
                                     final String keyBaiDang = FirebaseDatabase.getInstance().getReference("baiDang").push().getKey();
                                     String time = df.format(Calendar.getInstance().getTime());
-                                    BaiDang baidang = new BaiDang(edtieuDe.getText().toString(),edDiaChi.getText().toString(),Integer.parseInt(edDienTich.getText().toString()),lsUrl,Integer.parseInt(edGia.getText().toString()),keyBaiDang,idUser,time);
+                                    BaiDang baidang = new BaiDang(edtieuDe.getText().toString(),edDiaChi.getText().toString(),Integer.parseInt(edDienTich.getText().toString()),lsUrl,Integer.parseInt(edGia.getText().toString()),keyBaiDang,idUser,time,edSDT.getText().toString());
                                     FirebaseDatabase.getInstance().getReference("baiDang").child(keyBaiDang).setValue(baidang).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {

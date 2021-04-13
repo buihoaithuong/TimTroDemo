@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,11 +18,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ictu.vusenpai.timtro.R;
+import com.ictu.vusenpai.timtro.activity.MainActivity;
+import com.ictu.vusenpai.timtro.activity.login_activity;
 import com.ictu.vusenpai.timtro.model.User;
 import com.ictu.vusenpai.timtro.xuly.Update;
+import com.ictu.vusenpai.timtro.xuly.Utils;
 
 public class profile_Fragment extends Fragment {
-    TextView tv_fullname,tv_add,tv_email,tv_diachiCT,tv_SDT;
+    TextView tv_fullname,tv_add,tv_email,tv_diachiCT,tv_SDT, tv_LogOut;
     User user;
     private static FirebaseAuth mAuth;
     public void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,13 @@ public class profile_Fragment extends Fragment {
         View view = inflater.inflate(R.layout.profile_layout,container,false);
         anhxa(view);
         loadProfile();
+        tv_LogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                startActivity(new Intent(getActivity(), login_activity.class));
+            }
+        });
         return view;
     }
     private void anhxa(View view){
@@ -39,6 +50,7 @@ public class profile_Fragment extends Fragment {
         tv_email = view.findViewById(R.id.tv_email);
         tv_fullname = view.findViewById(R.id.tv_name);
         tv_SDT = view.findViewById(R.id.tv_sdt);
+        tv_LogOut = view.findViewById(R.id.logOut);
         mAuth = FirebaseAuth.getInstance();
     }
     private void loadProfile(){

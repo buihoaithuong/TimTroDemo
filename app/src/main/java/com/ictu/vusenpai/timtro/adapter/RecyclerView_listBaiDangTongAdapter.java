@@ -51,7 +51,7 @@ public class RecyclerView_listBaiDangTongAdapter extends RecyclerView.Adapter<Re
         holder.txtDiaChi.setText(baiDang.getDiaChi());
         holder.txtDienTich.setText("Diện tích:"+String.valueOf(baiDang.getDienTich())+"m2");
         holder.txtThoiGianDang.setText(baiDang.getTimeDang());
-        Glide.with(context).load(baiDang.getAnhFeeback().get(0)).error(R.drawable.no_internet).into(holder.imageView);
+        Glide.with(context).load(baiDang.getAnhFeeback().get(0)).error(R.drawable.ic_no_internet).into(holder.imageView);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

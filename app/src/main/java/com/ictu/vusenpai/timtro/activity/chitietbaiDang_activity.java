@@ -1,51 +1,57 @@
 package com.ictu.vusenpai.timtro.activity;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.maps.CameraUpdateFactory;
+import com.google.android.libraries.maps.GoogleMap;
+import com.google.android.libraries.maps.OnMapReadyCallback;
+import com.google.android.libraries.maps.SupportMapFragment;
+import com.google.android.libraries.maps.model.LatLng;
+import com.google.android.libraries.maps.model.MarkerOptions;
 import com.ictu.vusenpai.timtro.R;
 import com.ictu.vusenpai.timtro.adapter.ImageSliderAdapterInternet;
 import com.ictu.vusenpai.timtro.model.BaiDang;
 
+import org.json.JSONException;
+
 import java.util.List;
 
 public class chitietbaiDang_activity extends AppCompatActivity implements OnMapReadyCallback {
-    TextView txtTieuDe,txtDiaChi,txtDienTich,txtGia,txtSDT;
+    TextView txtDiaChi,txtDienTich,txtGia,txtSDT;
     SupportMapFragment mapFragment;
+    ViewPager imageSlider;
     GoogleMap map;
+    ProgressDialog progressDialog ;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chitiet_phong);
+        setContentView(R.layout.activity_chitietphong);
         anhxa();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         Bundle bundle = getIntent().getExtras();
         final BaiDang baiDangItem = bundle.getParcelable("Phong");
-        final ViewPager imageSlider = findViewById(R.id.imageSlider);
-        ImageSliderAdapterInternet imageSliderAdapterInternet = new ImageSliderAdapterInternet(baiDangItem.getAnhFeeback());
+        ImageSliderAdapterInternet imageSliderAdapterInternet = new ImageSliderAdapterInternet(getApplicationContext(),baiDangItem.getAnhFeeback());
+        getSupportActionBar().setTitle(String.valueOf(baiDangItem.getTieuDe()));
         imageSlider.setAdapter(imageSliderAdapterInternet);
-        txtTieuDe.setText(baiDangItem.getTieuDe());
         txtDiaChi.setText("Địa chỉ: " + baiDangItem.getDiaChi());
         txtDienTich.setText("Diện tích: " + String.valueOf(baiDangItem.getDienTich()) + "m2");
-        txtGia.setText("Giá: " + setGia(baiDangItem.getGia()));
-        txtSDT.setText("07462522734");
-        if(getLocationFromAddress(this,txtDiaChi.getText().toString())!=null)
-            mapFragment.getMapAsync(this);
-
+        txtGia.setText("Giá: " +baiDangItem.getGia());
+        txtSDT.setText(baiDangItem.getSoDienThoai());
     }
 
     @Override
@@ -54,31 +60,35 @@ public class chitietbaiDang_activity extends AppCompatActivity implements OnMapR
     }
 
     private void anhxa(){
-        txtTieuDe=findViewById(R.id.txtTieuDeChiTietBaiDang);
         txtDiaChi = findViewById(R.id.txtDiaChiChiTiet);
         txtDienTich = findViewById(R.id.txtDienTichChiTiet);
         txtGia= findViewById(R.id.txtGiaPhong);
+        imageSlider = findViewById(R.id.imageSlider);
         txtSDT = findViewById(R.id.txtSoDienThoai);
-        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.frMapChiTiet);
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.frMapChiTiet);
+        mapFragment.getMapAsync(this);
     }
-    private String setGia(int gia){
-        if(gia>0&&gia<1000000)
-            return String.valueOf(gia/1000+" Nghìn");
-        if(gia>1000000&&gia<1000000000)
-            return String.valueOf((gia/1000000)+" Triệu");
-        if(gia>1000000000)
-            return String.valueOf((gia/1000000000)+" Tỷ");
-        else return String.valueOf(0);
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        map = googleMap;
-        LatLng address = getLocationFromAddress(this,txtDiaChi.getText().toString() );
-        map.addMarker(new MarkerOptions().position(address).title("Phòng trọ ở đây"));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(address,17));
-
-
+    private void loadmap(){
+        class LoadMap extends AsyncTask<Void,Void,Void> {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                try {
+                    LatLng address = getLocationFromAddress(getApplicationContext(),txtDiaChi.getText().toString() );
+                    map.addMarker(new MarkerOptions().position(address).title("Phòng trọ ở đây"));
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(address,16));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        LoadMap load = new LoadMap();
+        load.execute();
     }
     public LatLng getLocationFromAddress(Context context, String strAddress)
     {
@@ -93,15 +103,17 @@ public class chitietbaiDang_activity extends AppCompatActivity implements OnMapR
                 return null;
             }
             Address location = address.get(0);
-            location.getLatitude();
-            location.getLongitude();
-
             p1 = new LatLng(location.getLatitude(), location.getLongitude());
         }
         catch (Exception e)
         {
-            e.printStackTrace();
         }
         return p1;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        loadmap();
     }
 }

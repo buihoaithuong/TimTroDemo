@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.activity.profile_activity">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/rellay1"
@@ -159,6 +158,19 @@
                     android:background="@color/white_greyish" />
 
             </LinearLayout>
+            <TextView
+                android:id="@+id/logOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/login_layout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:text="Đăng xuất"
+                android:textColor="@color/common_google_signin_btn_text_light_default"
+                android:textSize="15sp" />
 
         </LinearLayout>
 

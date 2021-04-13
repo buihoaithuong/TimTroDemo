@@ -37,7 +37,6 @@ public class search_Fragment extends Fragment {
         anhxa(view);
         return view;
     }
-
     @Override
     public void onStart() {
         super.onStart();

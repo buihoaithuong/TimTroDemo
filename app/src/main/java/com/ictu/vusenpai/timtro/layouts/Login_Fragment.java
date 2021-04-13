@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.ictu.vusenpai.timtro.R;
 import com.ictu.vusenpai.timtro.activity.MainActivity;
+import com.ictu.vusenpai.timtro.model.User;
 import com.ictu.vusenpai.timtro.xuly.Update;
 import com.ictu.vusenpai.timtro.xuly.Utils;
 

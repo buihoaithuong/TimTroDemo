@@ -1,22 +1,31 @@
 package com.ictu.vusenpai.timtro.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.ictu.vusenpai.timtro.R;
 import com.ictu.vusenpai.timtro.layouts.Login_Fragment;
 import com.ictu.vusenpai.timtro.xuly.Update;
 import com.ictu.vusenpai.timtro.xuly.Utils;
 
 public class login_activity extends AppCompatActivity {
-
+    private static FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mAuth = FirebaseAuth.getInstance();
+
+        if (mAuth.getCurrentUser() != null) {
+            Update.setlsUser(mAuth.getInstance().getCurrentUser().getUid());
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.frameContainer, new Login_Fragment(), Utils.Login_Fragment).commit();
         }
@@ -45,6 +54,6 @@ public class login_activity extends AppCompatActivity {
         if (SignUp_Fragment != null)
             replaceLoginFragment();
         else
-            super.onBackPressed();
+            finish();
     }
 }

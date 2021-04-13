@@ -8,9 +8,11 @@
         android:layout_height="?attr/actionBarSize"
         android:id="@+id/searchview"
         android:layout_margin="5dp"
-        android:queryHint="Nhập nội dung bạn cần tìm"/>
+        android:queryHint="Nhập nội dung bạn cần tìm"
+        android:background="@drawable/custom_edit_bofullgoc"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rvSearch"/>
+        android:id="@+id/rvSearch"
+        android:layout_margin="5dp"/>
 </LinearLayout>
